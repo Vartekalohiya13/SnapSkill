@@ -43,7 +43,7 @@ def get_llm():
     )
 async def generate_resume_markdown(experience: str) -> str:
     llm = get_llm()
-    chain = LLMChain(llm=llm, prompt=resume_prompt)
+    chain = resume_prompt | llm  # Uses LangChain's newer Runnable protocol
     result = await chain.ainvoke({"experience": experience})
     return result["text"]
 

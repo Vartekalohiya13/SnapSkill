@@ -4,6 +4,9 @@ import markdown
 import pdfkit
 import os
 
+
+config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
+
 def convert_markdown_to_html(markdown_text: str) -> str:
     """Convert Markdown to HTML."""
     return markdown.markdown(markdown_text)
