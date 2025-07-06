@@ -40,8 +40,13 @@ def markdown_to_pdf(m, path):
     html = convert_markdown_to_html(m)
     save_html_as_pdf(html, path)
 
+
+#test flow
 async def test_resume():
-    sample = "- Software Engineer at XYZ Corp (2021–2024): ..."  # shortened
+    sample ="""- Software Engineer at XYZ Corp (2021–2024): 
+  - Led team of 5, improved system uptime by 20%
+  - Created microservices in Python, deployed on AWS
+  - Mentored junior devs and conducted code review."""
     md = await generate_resume_markdown(sample)
     print(md)
     markdown_to_pdf(md, "test_resume.pdf")
@@ -49,4 +54,3 @@ async def test_resume():
 
 if __name__ == "__main__":
     asyncio.run(test_resume())
-
