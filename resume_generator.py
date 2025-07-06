@@ -1,53 +1,52 @@
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from dotenv import load_dotenv
+import os, asyncio
+import cohere  # install with `pip install cohere`
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
 from utils import convert_markdown_to_html, save_html_as_pdf
-import os 
 
 load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
-print("API KEY:", os.getenv("OPENAI_API_KEY"))
+cohere_key = os.getenv("COHERE_API_KEY")
+if not cohere_key:
+    raise ValueError("Missing COHERE_API_KEY")
 
-
+# 1. Prompt setup
 resume_prompt = PromptTemplate(
-        input_variables=["experience"],
-        template="""
-You are an expert resume writer with deep knowledge of modern hiring practices.
+    input_variables=["experience"],
+    template="""You are a resume expert...### User Experience:\n{experience}\nReturn resume in Markdown."""
+)
 
-Using the information provided below, generate a professional, ATS-optimized resume in clean markdown format. Structure it into the following sections:
-- **Professional Summary** (2 to 3 concise, compelling sentences)
-- **Core Skills** (bulleted list of 8 to 12 skills relevant to the experience)
-- **Professional Experience** (reverse-chronological bullet points with clear impact and quantifiable achievements)
-- **Education** (include degree, institution, and dates if available)
+# 2. Cohere chat wrapper for LCEL
+class CohereChatLLM:
+    def __init__(self, api_key):
+        self.client = cohere.Client(api_key)
+    async def __call__(self, prompt_value):
+        resp = self.client.chat(
+            model="command",  # trial tier model
+            message=prompt_value.text,
+            temperature=0.7
+        )
+        return resp.text
 
-Ensure:
-- Use of strong action verbs
-- Quantified accomplishments where possible (e.g. “Increased sales by 20%”)
-- Clear formatting (no tables)
+# 3. Build pipeline: prompt → cohere LLM → parser
+def get_chain():
+    return resume_prompt | CohereChatLLM(cohere_key) | StrOutputParser()
 
-### User Experience:
-{experience}
+async def generate_resume_markdown(experience):
+    return await get_chain().ainvoke({"experience": experience})
 
-Return the resume only in valid markdown format.
-"""
- )
+def markdown_to_pdf(m, path):
+    html = convert_markdown_to_html(m)
+    save_html_as_pdf(html, path)
 
-def get_llm():
-    if not openai_api_key:
-        raise ValueError("Missing OpenAI API key in environment variables.")
-    return ChatOpenAI(
-    temperature=0.7,
-      model_name="gpt-3.5-turbo",
-     openai_api_key=openai_api_key
-    )
-async def generate_resume_markdown(experience: str) -> str:
-    llm = get_llm()
-    chain = LLMChain(llm=llm, prompt=resume_prompt)
-    result = await chain.ainvoke({"experience": experience})
-    return result["text"]
+async def test_resume():
+    sample = "- Software Engineer at XYZ Corp (2021–2024): ..."  # shortened
+    md = await generate_resume_markdown(sample)
+    print(md)
+    markdown_to_pdf(md, "test_resume.pdf")
+    print("✅ Done!")
 
-def markdown_to_pdf(markdown: str, pdf_path: str):
-    html = convert_markdown_to_html(markdown)
-    save_html_as_pdf(html, pdf_path)
+if __name__ == "__main__":
+    asyncio.run(test_resume())
 

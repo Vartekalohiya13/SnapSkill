@@ -1,3 +1,9 @@
-streamlit
-openai
+fastapi
+uvicorn
+python-multipart
 langchain
+langchain-openai
+openai
+weasyprint
+markdown2
+python-dotenv
