@@ -14,7 +14,7 @@ if not cohere_key:
 # 1. Prompt setup
 resume_prompt = PromptTemplate(
     input_variables=["experience"],
-    template="""You are a resume expert...### User Experience:\n{experience}\nReturn resume in Markdown."""
+    template="""You are a resume expert... give clear and concise response including their hobbies too and don't ask user for any further changes or transformation in the provided output keep it accurate with thing that needs to be in a resume### User Experience:\n{experience}\nReturn resume in Markdown."""
 )
 
 # 2. Cohere chat wrapper for LCEL
@@ -57,7 +57,8 @@ def markdown_to_pdf(md: str, path: str, template: str = "modern.html"):
 
 #test flow
 async def test_resume(template="modern.html"):
-    sample ="""- Software Engineer at MICROSOFT (2021–2024): 
+    sample ="""-Name is Vani Girdhar
+    - Software Engineer at MICROSOFT (2021–2024): 
   - Led team of 5, improved system uptime by 20%
   - Created microservices in Python, deployed on AWS
   - Mentored junior devs and conducted code review.
