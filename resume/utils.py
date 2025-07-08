@@ -19,7 +19,7 @@ def save_html_as_pdf(html_content: str, output_path: str) -> None:
     """Save HTML as PDF using pdfkit with correct wkhtmltopdf configuration."""
     # 🔧 Tell pdfkit exactly where wkhtmltopdf.exe lives
     config = pdfkit.configuration(
-        wkhtmltopdf=r"C:\Users\hpnar\OneDrive\Desktop\ai resume builder\SnapSkill-1\wkhtmltopdf\bin\wkhtmltopdf.exe"
+        wkhtmltopdf=r"C:\Users\hpnar\OneDrive\Desktop\ai resume builder\SnapSkill-1\wkhtmltopdf\bin\wkhtmltopdf.exe"  # Adjust this path as needed
     )
     options = {
         "enable-local-file-access": None

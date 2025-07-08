@@ -12,19 +12,83 @@ if not cohere_key:
     raise ValueError("Missing COHERE_API_KEY")
 
 # 1. Prompt setup
+
 resume_prompt = PromptTemplate(
     input_variables=["experience"],
-    template="""You are a resume expert... give clear and concise response including their hobbies too and don't ask user for any further changes or transformation in the provided output keep it accurate with thing that needs to be in a resume. we want resume in below format 
-    1:Profile 
-    2:Proffesional Snapshot
-    3:Skills
-    4:education Qualification
-    5:Project Experience(minimum 3 project and their description with  user role should be added)
-    6:Hobby
-    7:Personal Details
-    8:Disclaimer("generic disclaimer should be given to describe user profile and experience") 
-    ### User Experience:\n{experience}\nReturn resume in Markdown."""
+    template="""
+You are a professional resume generator. Based on the user's experience, generate a clean, modern, and structured resume. This resume will be converted to HTML and then to PDF — so your output must use clean Markdown or HTML-compatible Markdown.
+
+🧾 Strict Format Instructions:
+
+📌 1. Date (Top-Right):
+- Always Display today's date(the date on which the resume is made) in YYYY-MM-DD format.
+- Align it to the top-right corner using: <div style='text-align:right; font-size:12px;'>YYYY-MM-DD</div>
+
+📌 2. Font Styling:
+- Use <h2>, <h3>, or <strong> for headings to show visual hierarchy.
+- Ensure content uses <p style='font-size:13px;'>...</p> for readability.
+- Avoid oversized fonts or headers.
+
+📌 3. Section Order:
+1. <h2>Profile</h2>
+   - NAME and from the next line 2–3 lines about the candidate's strengths and experience.
+
+2. <h2>Professional Snapshot</h2>
+   - Use <ul> list for crisp points.
+
+3. <h2 style='color:#007ACC;'>Skills</h2>
+   - Format as HTML table with borders:
+     <table style="border-collapse:collapse; width:100%;">
+       <tr><th style="border:1px solid #ccc;">Skill</th><th style="border:1px solid #ccc;">Proficiency</th></tr>
+       <tr><td style="border:1px solid #ccc;">Python</td><td style="border:1px solid #ccc;">Expert</td></tr>
+     </table>
+
+4. <h2>Education Qualification</h2>
+   - Similar bordered HTML table with columns: Degree, Institution, Year.
+
+5. <h2 style='color:#007ACC;'>Project Experience</h2>
+   - At least 3 projects.
+   - Use an HTML table with columns: Project Title, Role, Description.
+
+6. <h2>Hobbies</h2>
+   - Comma-separated list.
+
+7. <h2>Personal Details</h2>
+   - Use HTML table:
+     <table style="border-collapse:collapse; width:100%;">
+       <tr><th style="border:1px solid #ccc;">Field</th><th style="border:1px solid #ccc;">Value</th></tr>
+       <tr><td style="border:1px solid #ccc;">Name</td><td style="border:1px solid #ccc;">Vani Girdhar</td></tr>
+     </table>
+
+8. <h2>Disclaimer</h2>
+     <p style='font-size:12px;'>(generic disclaimer should be given to describe user's profile and experience for professional purposes.)</p>
+
+🚫 Don’ts:
+- Do not write “Here is your resume” or any extra explanations or any question asking to improve the resume.
+- Do not use Markdown code blocks (no ```).
+- Ensure no content is outside the structure defined above.
+
+Now generate the resume using this structure based on the user’s experience below:
+
+Experience:
+{experience}
+"""
 )
+
+
+# resume_prompt = PromptTemplate(
+#     input_variables=["experience"],
+#     template="""You are a resume expert... give clear and concise response including their hobbies too and don't ask user for any further changes or transformation in the provided output keep it accurate with thing that needs to be in a resume. we want resume in below format 
+#     1:Profile 
+#     2:Proffesional Snapshot
+#     3:Skills
+#     4:education Qualification
+#     5:Project Experience(minimum 3 project and their description with  user role should be added)
+#     6:Hobby
+#     7:Personal Details
+#     8:Disclaimer("generic disclaimer should be given to describe user profile and experience") 
+#     ### User Experience:\n{experience}\nReturn resume in Markdown."""
+# )
 
 # 2. Cohere chat wrapper for LCEL
 class CohereChatLLM:
