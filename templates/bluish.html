@@ -1,0 +1,27 @@
+<!-- templates/bluish.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bluish Resume</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 40px;
+      background-color: #f4f8fb;
+      color: #2c3e50;
+    }
+    h1, h2, h3 {
+      color: #2980b9;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+    ul {
+      list-style-type: square;
+    }
+  </style>
+</head>
+<body>
+  {{ content|safe }}
+</body>
+</html>

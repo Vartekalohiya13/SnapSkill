@@ -1,0 +1,16 @@
+<<<<<<< HEAD:requirements.txt
+fastapi
+uvicorn
+python-multipart
+=======
+
+streamlit
+PyPDF2
+openai
+>>>>>>> 105eec781b26ecca70f5c075b9fc6d23efeb4bf3:requirements2.txt
+langchain
+langchain-openai
+openai
+weasyprint
+markdown2
+python-dotenv
