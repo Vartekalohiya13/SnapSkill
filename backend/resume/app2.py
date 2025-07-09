@@ -1,7 +1,7 @@
 
 import streamlit as st
 from io import BytesIO
-from ats_checker2 import calculate_ats_score_with_job_pdf
+from resume.ats_checker2 import calculate_ats_score_with_job_pdf
 
 st.title("📄 ATS Score – Compare Resume to Job Description")
 
