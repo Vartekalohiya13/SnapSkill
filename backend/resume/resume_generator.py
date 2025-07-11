@@ -53,11 +53,13 @@ You are a professional resume generator. Based on the user's experience, generat
 6. <h2>Hobbies</h2>
    - Comma-separated list.
 
-7. <h2>Personal Details</h2>
+7.  <h2>Personal Details</h2>
    - Use HTML table:
      <table style="border-collapse:collapse; width:100%;">
        <tr><th style="border:1px solid #ccc;">Field</th><th style="border:1px solid #ccc;">Value</th></tr>
        <tr><td style="border:1px solid #ccc;">Name</td><td style="border:1px solid #ccc;">Vani Girdhar</td></tr>
+       <tr><td style="border:1px solid #ccc;">LinkedIn</td><td style="border:1px solid #ccc;"><a href='https://www.linkedin.com/in/your-linkedin-username' target='_blank'>linkedin.com/in/your-linkedin-username</a></td></tr>
+       <tr><td style="border:1px solid #ccc;">GitHub</td><td style="border:1px solid #ccc;"><a href='https://github.com/your-github-username' target='_blank'>github.com/your-github-username</a></td></tr>
      </table>
 
 8. <h2>Disclaimer</h2>
@@ -135,7 +137,9 @@ async def test_resume(template="professional.html"):
   - Led team of 5, improved system uptime by 20%
   - Created microservices in Python, deployed on AWS
   - Mentored junior devs and conducted code review.
-  - Has won various Hackathons"""
+  - Has won various Hackathons
+   -my github profile :- https://github.com/vanixyz
+   -my linkedin profile:- https://www.linkedin.com/in/vani-girdhar-0774aa322?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"""
     
     md = await generate_resume_markdown(sample)
     clean_md = clean_markdown(md)
