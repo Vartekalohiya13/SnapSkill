@@ -1,0 +1,110 @@
+/* src/styles/landing.css */
+
+.landing-hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 3rem;
+}
+
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero-left h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #1E90FF, #008894);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background-color: #1E90FF;
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #006FBE;
+}
+
+.secondary-btn {
+  background-color: white;
+  color: #008894;
+  border: 2px solid #008894;
+}
+
+.secondary-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resume-carousel {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  height: auto;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.resume-img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.resume-img.active {
+  position: relative;
+  opacity: 1;
+  z-index: 2;
+}
