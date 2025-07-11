@@ -1,52 +1,51 @@
+// File: src/pages/Home.jsx
 import React from "react";
 import "../styles/home.css";
-import { useNavigate } from "react-router-dom";
-
-import resumeIcon from "../assets/builder.svg";
-import atsIcon from "../assets/ats.svg";
-import enhanceIcon from "../assets/enhancer.svg";
+import builder from "../assets/builder.svg";
+import enhancer from "../assets/enhancer.svg";
 
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="home-page">
-      {/* Background blobs */}
-      <div className="bg-blob blob1"></div>
-      <div className="bg-blob blob2"></div>
+    <div className="home-container">
+      <h1 className="main-heading">
+        Welcome to <span className="brand">SnapSkill</span>
+      </h1>
+      <p className="tagline">Build. Enhance. Conquer the Job Market. 🚀</p>
 
-      {/* Welcome text */}
-      <div className="welcome-banner">
-        <h2 className="animated-welcome">
-          Welcome to <span className="gradient-text">SnapSkill</span>
-        </h2>
-        <p className="typewriter-effect">
-          Your smart assistant for career success 🚀
-        </p>
-      </div>
+      <h2>Choose a Tool</h2>
+      <p className="small">Click any option below to get started</p>
 
-      {/* Headings */}
-      <h3 className="home-heading">Choose a Tool</h3>
-      <p className="home-subheading">Click any option below to get started</p>
-
-      {/* Tool Cards */}
-      <div className="tools-container">
-        <div className="tool-card" onClick={() => navigate("/resume-builder")}>
-          <img src={resumeIcon} alt="Resume Builder" className="tool-icon" />
+      <div className="tool-cards">
+        <div
+          className="tool-card"
+          onClick={() => (window.location.href = "/resume-builder")}
+        >
+          <img src={builder} alt="Resume Builder" />
           <h3>Resume Builder</h3>
-          <p>Create a job-winning resume with AI guidance and modern templates.</p>
+          <p>
+            Create a job-winning resume with AI guidance and modern templates.
+          </p>
         </div>
 
-        <div className="tool-card" onClick={() => navigate("/ats-checker")}>
-          <img src={atsIcon} alt="ATS Checker" className="tool-icon" />
+        <div
+          className="tool-card"
+          onClick={() => (window.location.href = "/ats-checker")}
+        >
+          <img src="https://img.icons8.com/ios-filled/50/4CAF50/bar-chart.png" alt="ATS Checker" />
           <h3>ATS Checker</h3>
           <p>Check if your resume is ATS-friendly and improve your score.</p>
         </div>
 
-        <div className="tool-card" onClick={() => navigate("/resume-enhancer")}>
-          <img src={enhanceIcon} alt="Resume Enhancer" className="tool-icon" />
+        <div
+          className="tool-card"
+          onClick={() => (window.location.href = "/resume-enhancer")}
+        >
+          <img src={enhancer} alt="Resume Enhancer" />
           <h3>Resume Enhancer</h3>
-          <p>Enhance your resume with bullet suggestions and AI keyword optimization.</p>
+          <p>
+            Enhance your resume with bullet suggestions and AI keyword
+            optimization.
+          </p>
         </div>
       </div>
     </div>

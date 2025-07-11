@@ -1,223 +1,64 @@
-/* General Layout */
-.home-page {
+.home-container {
+  text-align: center;
   padding: 3rem 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  background: #f8f9fb;
-  position: relative;
+  background: linear-gradient(to right, #f0f4ff, #ffffff);
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
-/* Background Blobs */
-.bg-blob {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.2;
-  z-index: 0;
-  filter: blur(60px);
-  animation: float 6s ease-in-out infinite;
-}
-
-.blob1 {
-  width: 300px;
-  height: 300px;
-  background: #1e90ff;
-  top: -100px;
-  left: -100px;
-}
-
-.blob2 {
-  width: 250px;
-  height: 250px;
-  background: #00b894;
-  bottom: -80px;
-  right: -80px;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-10px) scale(1.05);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Welcome Banner */
-.welcome-banner {
-  text-align: center;
-  margin-bottom: 2rem;
-  z-index: 2;
-  position: relative;
-}
-
-.animated-welcome {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2c2c2c;
-  animation: fadeSlideIn 1s ease forwards;
-}
-
-@keyframes fadeSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.typewriter-effect {
-  color: #555;
-  font-size: 1.1rem;
-  width: fit-content;
-  margin: 0 auto;
-  border-right: 2px solid #00b894;
-  white-space: nowrap;
-  overflow: hidden;
-  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #00b894;
-  }
-}
-
-/* Headings */
-.home-heading {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
-  color: #2c2c2c;
+.main-heading {
+  font-size: 3rem;
   margin-bottom: 0.5rem;
-  z-index: 2;
-  position: relative;
+  font-weight: 700;
 }
 
-.home-subheading {
-  text-align: center;
-  font-size: 1rem;
-  color: #777;
+.brand {
+  background: linear-gradient(90deg, #0099ff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #666;
   margin-bottom: 2rem;
-  z-index: 2;
-  position: relative;
 }
 
-/* Tools Grid */
-.tools-container {
+.tool-cards {
   display: flex;
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
-  z-index: 2;
-  position: relative;
+  margin-top: 2rem;
 }
 
-/* Tool Card */
 .tool-card {
-  background: #ffffff;
-  padding: 1.5rem 1rem;
+  background: #fff;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  width: 250px;
-  opacity: 1;
-  transform: none;
-  transition: all 0.3s ease;
+  padding: 1.5rem;
+  width: 280px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  position: relative;
-  border: 1px solid transparent;
+  text-align: center;
 }
 
 .tool-card:hover {
-  box-shadow: 0 12px 24px rgba(30, 144, 255, 0.25);
-  border: 1px solid #1e90ff;
-  background-color: #f9fcff;
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
-.tool-icon {
-  width: 60px;
+.tool-card img {
+  width: 40px;
+  height: 40px;
   margin-bottom: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.tool-card:hover .tool-icon {
-  transform: scale(1.1);
 }
 
 .tool-card h3 {
-  margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  color: #2c2c2c;
+  margin-bottom: 0.5rem;
 }
 
 .tool-card p {
   font-size: 0.95rem;
-  color: #666;
-}
-
-/* CTA Footer */
-.cta-footer {
-  text-align: center;
-  margin-top: 3rem;
-  z-index: 2;
-  position: relative;
-}
-
-.cta-footer p {
-  font-size: 1rem;
-  color: #444;
-  margin-bottom: 0.5rem;
-}
-
-.cta-footer button {
-  background-color: #1e90ff;
-  color: #fff;
-  padding: 0.7rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.cta-footer button:hover {
-  background-color: #0f78d1;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .tools-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .home-heading,
-  .home-subheading,
-  .animated-welcome,
-  .typewriter-effect {
-    text-align: center;
-  }
-
-  .tool-card {
-    width: 90%;
-  }
+  color: #555;
 }

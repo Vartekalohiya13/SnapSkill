@@ -1,92 +1,73 @@
+
 import React, { useState } from "react";
-import axios from "axios";
 import "../styles/ATSChecker.css";
-import Confetti from "react-confetti";
 
 const ATSChecker = () => {
-  const [resumeFile, setResumeFile] = useState(null);
   const [score, setScore] = useState(null);
-  const [matched, setMatched] = useState([]);
-  const [missing, setMissing] = useState([]);
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [resume, setResume] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [keywords, setKeywords] = useState({ matched: [], missing: [] });
 
-  const handleFileChange = (e) => {
-    setResumeFile(e.target.files[0]);
-    setScore(null);
-    setMatched([]);
-    setMissing([]);
-    setShowConfetti(false);
-  };
-
-  const handleCheckATS = async () => {
-    if (!resumeFile) return alert("Upload your resume!");
-
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    setResume(file);
     const formData = new FormData();
-    formData.append("resume", resumeFile);
+    formData.append("resume", file);
 
-    try {
-      const res = await axios.post("http://127.0.0.1:5000/match", formData);
-      setScore(res.data.score);
-      setMatched(res.data.matched_keywords.map(k => k.keyword));
-      setMissing(res.data.job_text.split(" ").filter(k => !res.data.resume_text.includes(k)));
-      if (res.data.score >= 70) setShowConfetti(true);
-    } catch (err) {
-      alert("Error checking ATS score.");
-    }
+    const res = await fetch("http://localhost:5000/match", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    setScore(data.ats_score);
+    setSuggestions(data.suggestions || []);
+    setKeywords({ matched: data.matched_keywords, missing: data.missing_keywords });
   };
 
   return (
-    <div className="ats-container">
-      {showConfetti && <Confetti />}
+    <div className="ats-page">
+      <h2>ATS Resume Checker</h2>
+      <p>Upload your resume and see how well it matches the job description</p>
 
-      <h1 className="ats-heading">Welcome to SnapSkill ATS Checker</h1>
-      <p className="ats-subheading">
-        Discover how well your resume performs in real-world hiring systems.
-        Our AI-powered tool evaluates your resume and gives you a personalized ATS score instantly.
-      </p>
+      <label className="upload-label">
+        <input type="file" accept=".pdf" onChange={handleUpload} />
+        Choose Resume PDF
+      </label>
 
-      <div className="ats-grid">
-        <div className="upload-box">
-          <h2>Upload Your Resume</h2>
-          <input type="file" onChange={handleFileChange} accept="application/pdf" />
-          <button onClick={handleCheckATS}>Check ATS Score</button>
-        </div>
-
-        <div className="score-box">
-          <h2>Your ATS Score</h2>
-          <div className="circle-score">
-            {score !== null ? <span>{score}%</span> : <span>--</span>}
+      {score && (
+        <div className="result-box">
+          <div className="score-ring">
+            <span>{score}%</span>
           </div>
-        </div>
-      </div>
 
-      {score !== null && (
-        <>
-          <div className="keyword-section">
-            <div className="matched">
-              <h3>✅ Matched Keywords</h3>
-              <div className="tags">
-                {matched.length > 0 ? matched.map((kw, i) => (
-                  <span key={i} className="tag green">{kw}</span>
-                )) : <span className="none">No keywords matched</span>}
+          <div className="keywords-box">
+            <div>
+              <h4>✅ Matched Keywords</h4>
+              <div className="chips green">
+                {keywords.matched.map((word, i) => (
+                  <span key={i}>{word}</span>
+                ))}
               </div>
             </div>
-
-            <div className="missing">
-              <h3>❌ Missing Keywords</h3>
-              <div className="tags">
-                {missing.length > 0 ? missing.slice(0, 15).map((kw, i) => (
-                  <span key={i} className="tag red">{kw}</span>
-                )) : <span className="none">Nothing missing!</span>}
+            <div>
+              <h4>❌ Missing Keywords</h4>
+              <div className="chips red">
+                {keywords.missing.map((word, i) => (
+                  <span key={i}>{word}</span>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="enhancer-link">
-            <p>Want to improve your score?</p>
-            <a href="/resume-enhancer">Try our Resume Enhancer →</a>
+          <div className="tips">
+            <h4>🔧 Suggestions to Improve:</h4>
+            <ul>
+              {suggestions.map((tip, i) => (
+                <li key={i}>{tip}</li>
+              ))}
+            </ul>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

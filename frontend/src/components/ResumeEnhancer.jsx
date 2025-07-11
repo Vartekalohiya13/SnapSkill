@@ -1,78 +1,54 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "../styles/ResumeEnhancer.css";
 
+
 const ResumeEnhancer = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [suggestions, setSuggestions] = useState("");
-  const [enhancedPDF, setEnhancedPDF] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [resume, setResume] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [enhanced, setEnhanced] = useState(null);
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-    setSuggestions("");
-    setEnhancedPDF(null);
-  };
-
-  const handleEnhance = async () => {
-    if (!selectedFile) return;
-
-    setLoading(true);
-    setSuggestions("");
-    setEnhancedPDF(null);
-
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    setResume(file);
     const formData = new FormData();
-    formData.append("resume", selectedFile);
+    formData.append("resume", file);
 
-    try {
-      const res = await axios.post("http://localhost:5000/enhance", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        responseType: "blob"
-      });
-
-      const suggestionsText = decodeURIComponent(
-        res.headers["x-suggestions"] || "No suggestions received."
-      );
-      setSuggestions(suggestionsText);
-
-      const pdfBlob = new Blob([res.data], { type: "application/pdf" });
-      setEnhancedPDF(URL.createObjectURL(pdfBlob));
-    } catch (err) {
-      console.error("Enhancement failed:", err);
-      alert("Backend enhancement failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    const res = await fetch("http://localhost:5001/enhance", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    setSuggestions(data.suggestions);
+    setEnhanced(data.enhanced_pdf);
   };
 
   return (
-    <div className="enhancer-container">
-      <h1>🚀 Resume Enhancer</h1>
-      <p className="enhancer-subtext">
-        Upload your resume and let our AI improve it for ATS compatibility, clarity, and professionalism.
-      </p>
+    <div className="enhancer-page">
+      <h2>Resume Enhancer</h2>
+      <p>Get instant AI-powered suggestions and optimized resume</p>
 
-      <div className="upload-box">
-        <input type="file" accept=".pdf" onChange={handleFileChange} />
-        <button onClick={handleEnhance} disabled={loading}>
-          {loading ? "Enhancing..." : "Enhance Resume"}
-        </button>
-      </div>
+      <label className="upload-label">
+        <input type="file" accept=".pdf" onChange={handleUpload} />
+        Upload Resume
+      </label>
 
-      {suggestions && (
-        <div className="ai-suggestions">
-          <h3>🧠 AI Suggestions</h3>
-          <pre>{suggestions}</pre>
-        </div>
-      )}
-
-      {enhancedPDF && (
-        <div className="download-box">
-          <a href={enhancedPDF} download="enhanced_resume.pdf">
-            ⬇️ Download Enhanced Resume
-          </a>
+      {suggestions.length > 0 && (
+        <div className="suggestion-box">
+          <h4>✨ Suggestions:</h4>
+          <ul>
+            {suggestions.map((tip, i) => (
+              <li key={i}>{tip}</li>
+            ))}
+          </ul>
+          {enhanced && (
+            <a
+              href={`data:application/pdf;base64,${enhanced}`}
+              download="enhanced_resume.pdf"
+              className="download-btn"
+            >
+              Download Enhanced Resume
+            </a>
+          )}
         </div>
       )}
     </div>

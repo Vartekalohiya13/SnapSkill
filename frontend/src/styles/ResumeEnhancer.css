@@ -1,65 +1,42 @@
-.enhancer-container {
-  max-width: 800px;
-  margin: 2rem auto;
+.enhancer-page {
   padding: 2rem;
-  text-align: center;
-  background: linear-gradient(135deg, #f6f8ff, #e2e8f0);
+  background: linear-gradient(to right, #e0f7fa, #fce4ec);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-h1 {
-  font-size: 2rem;
-  color: #1a202c;
-}
-
-.enhancer-subtext {
-  font-size: 1rem;
-  color: #4a5568;
-  margin-bottom: 1.5rem;
-}
-
-.upload-box {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-}
-
-.upload-box input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fff;
-}
-
-.upload-box button {
-  background-color: #3182ce;
-  color: white;
-  padding: 0.6rem 1.4rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.ai-suggestions {
-  margin-top: 2rem;
-  background: #edf2f7;
-  padding: 1rem;
-  border-left: 5px solid #4299e1;
-  text-align: left;
-  white-space: pre-wrap;
+.upload-label {
+  display: inline-block;
+  padding: 10px 18px;
+  background: #4fc3f7;
+  color: #fff;
   border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
 }
 
-.download-box {
+.upload-label:hover {
+  background: #0288d1;
+}
+
+.result-box {
   margin-top: 1.5rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.07);
 }
 
-.download-box a {
-  text-decoration: none;
-  color: #2b6cb0;
-  font-weight: bold;
+ul li {
+  margin: 0.5rem 0;
+}
+
+.enhanced-preview {
+  white-space: pre-wrap;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-family: monospace;
 }
