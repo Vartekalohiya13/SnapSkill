@@ -1,0 +1,106 @@
+/* landing.css */
+
+.landing-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 6rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.left-content {
+  flex: 1;
+  max-width: 50%;
+}
+
+.main-heading {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #2c2c2c;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #1e90ff, #00b894);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subheading {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #444;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background-color: #1e90ff;
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #0f78d1;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  border: 2px solid #00b894;
+  color: #00b894;
+}
+
+.secondary-btn:hover {
+  background-color: #00b894;
+  color: white;
+}
+
+.right-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-container {
+  position: relative;
+  width: 350px;
+  height: 480px;
+  perspective: 1000px;
+}
+
+.carousel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.carousel-img.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+.carousel-img.inactive {
+  z-index: 1;
+}

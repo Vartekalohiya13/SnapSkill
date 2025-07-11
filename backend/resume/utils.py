@@ -2,18 +2,17 @@ import os
 import markdown
 import pdfkit
 from jinja2 import Environment, FileSystemLoader
-
-# 👇 This makes the path absolute, relative to this utils.py file
-TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
-env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+import os 
+env = Environment(loader=FileSystemLoader("templates"))
 
 
 def convert_markdown_to_html(markdown_text: str) -> str:
     return markdown.markdown(markdown_text)
 
-def render_template_with_content(template_name: str, html_content: str) -> str:
-    template = env.get_template(template_name)
-    return template.render(content=html_content)
+def render_template_with_content(template_path: str, resume_content: str) -> str:
+    with open(template_path, "r", encoding="utf-8") as file:
+        template = file.read()
+    return template.replace("{{ content }}", resume_content)
 
 def save_html_as_pdf(html_content: str, output_path: str) -> None:
     config = pdfkit.configuration(
@@ -24,6 +23,12 @@ def save_html_as_pdf(html_content: str, output_path: str) -> None:
     }
     pdfkit.from_string(html_content, output_path, options=options, configuration=config)
 
+
+
+
+
 def is_valid_template(template_name: str) -> bool:
-    path = os.path.join(TEMPLATE_DIR, template_name)
+    path = os.path.join("templates", template_name)
     return os.path.isfile(path)
+
+
